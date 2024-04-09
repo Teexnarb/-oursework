@@ -7,7 +7,7 @@ import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    private final Set<Question> questions = new HashSet<>();
+    private final Collection<Question> questions = new HashSet<>();
     @Override
     public Question add(String question, String answer) {
         Question newQuestion = new Question(question, answer);
@@ -30,7 +30,7 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Collection<Question> getAll() {
-        return null;
+        return questions;
     }
 
     @Override
@@ -38,5 +38,9 @@ public class JavaQuestionService implements QuestionService {
         Random random = new Random();
         int randomInt = random.nextInt(questions.size());
         return new ArrayList<>(questions).get(randomInt);
+    }
+
+    public void remove(Question question) {
+
     }
 }
