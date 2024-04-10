@@ -1,9 +1,11 @@
 package pro.sky.JavaCoursework.service;
 
+import org.apache.coyote.BadRequestException;
 import pro.sky.JavaCoursework.entity.Question;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ExaminerService {
-        Collection<Question> getQuestions(int amount);
+
+        List<Question> getQuestions(int count) throws BadRequestException;
 }

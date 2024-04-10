@@ -20,35 +20,35 @@ public class JavaQuestionServiceTest {
     }
 
     @Test
-    public void add() {
-        questionService.add("Where are you?", "I'm at home.");
+    public void addQuestion() {
+        questionService.addQuestion("Where are you?", "I'm at home.");
         Collection<Question> questions =
-                questionService.getAll();
+                questionService.getAllQuestions();
         assertEquals(1, questions.size());
     }
 
     @Test
     public void removeQuestion() {
-        questionService.add("Where are you?", "I'm at home.");
+        questionService.addQuestion("Where are you?", "I'm at home.");
         Question question = questionService.getRandomQuestion();
-        questionService.remove(question);
+        questionService.removeQuestion(question);
         Collection<Question> questions =
-                questionService.getAll();
+                questionService.getAllQuestions();
         assertTrue(questions.isEmpty());
     }
 
     @Test
     public void getAllQuestions() {
-        questionService.add("Where are you?", "I'm at home.");
-        Collection<Question> questions = questionService.getAll();
+        questionService.addQuestion("Where are you?", "I'm at home.");
+        Collection<Question> questions = questionService.getAllQuestions();
         assertEquals(1,questions.size());
     }
 
     @Test
     public void getRandomQuestion() {
-        questionService.add("Where are you?", "I'm at home.");
-        questionService.add("How are you?", "I'm fine.");
-        Collection<Question> questions = questionService.getAll();
+        questionService.addQuestion("Where are you?", "I'm at home.");
+        questionService.addQuestion("How are you?", "I'm fine.");
+        Collection<Question> questions = questionService.getAllQuestions();
         assertEquals(2, questions.size());
     }
 

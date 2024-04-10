@@ -1,16 +1,13 @@
 package pro.sky.JavaCoursework.service;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import pro.sky.JavaCoursework.entity.Question;
-import pro.sky.JavaCoursework.exception.QuestionLimitException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
-
     private final QuestionService questionService;
 
     public ExaminerServiceImpl(QuestionService questionService) {
@@ -18,18 +15,20 @@ public class ExaminerServiceImpl implements ExaminerService {
     }
 
     @Override
-    public Collection<Question> getQuestions(int amount) {
-        Collection<Question> allQuestion = questionService.getAll();
-        int allQuestionSize = allQuestion.size();
-        if (allQuestionSize < amount) {
-            throw new QuestionLimitException(String.format(" ", amount, allQuestionSize));
+    public List<Question> getQuestions(int count) throws BadRequestException {
+        List<Question> questions = new ArrayList<>();
+
+        while (questions.size() < count) {
+            Question question = questionService.getRandomQuestion();
+
+            if (!questions.contains(question)) {
+                questions.add(question);
+            }
         }
 
-        Set<Question> result = new HashSet<>();
-        while (result.size() < amount) {
-            result.add(questionService.getRandomQuestion());
+        if (questions.size() < count) {
+            throw new NotEnoughQuestions("Вопросов получено недостаточное количество");
         }
-        return result;
+        return questions;
     }
-
 }

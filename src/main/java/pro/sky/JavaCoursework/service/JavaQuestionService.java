@@ -7,40 +7,33 @@ import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    private final Collection<Question> questions = new HashSet<>();
-    @Override
-    public Question add(String question, String answer) {
-        Question newQuestion = new Question(question, answer);
-        questions.add(newQuestion);
-        return newQuestion;
+
+    private List<Question> questions;
+
+    public JavaQuestionService() {
+        questions = new ArrayList<>();
     }
 
     @Override
-    public Question add(Question question) {
+    public void addQuestion(String text, String answer) {
+        Question question = new Question(text, answer);
         questions.add(question);
-        return question;
     }
 
     @Override
-    public Question remove(String question, String answer) {
-        Question questionForDelete = new Question(question, answer);
-        questions.remove(questionForDelete);
-        return questionForDelete;
+    public void removeQuestion(Question question) {
+        questions.remove(question);
     }
 
     @Override
-    public Collection<Question> getAll() {
+    public Collection<Question> getAllQuestions() {
         return questions;
     }
 
     @Override
     public Question getRandomQuestion() {
         Random random = new Random();
-        int randomInt = random.nextInt(questions.size());
-        return new ArrayList<>(questions).get(randomInt);
-    }
-
-    public void remove(Question question) {
-
+        int index = random.nextInt(questions.size());
+        return questions.get(index);
     }
 }
