@@ -1,10 +1,12 @@
 package pro.sky.JavaCoursework.service;
 
-import org.apache.coyote.BadRequestException;
+
 import org.springframework.stereotype.Service;
 import pro.sky.JavaCoursework.entity.Question;
+import pro.sky.JavaCoursework.exception.NotEnoughQuestions;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
@@ -15,7 +17,7 @@ public class ExaminerServiceImpl implements ExaminerService {
     }
 
     @Override
-    public List<Question> getQuestions(int count) throws BadRequestException {
+    public List<Question> getQuestions(int count) {
         List<Question> questions = new ArrayList<>();
 
         while (questions.size() < count) {
