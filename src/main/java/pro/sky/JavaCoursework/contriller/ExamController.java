@@ -1,8 +1,5 @@
 package pro.sky.JavaCoursework.contriller;
 
-import org.apache.coyote.BadRequestException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.JavaCoursework.entity.Question;
@@ -20,7 +17,7 @@ public class ExamController {
         this.examinerService = examinerService;
     }
 
-    public List<Question> getQuestions(int amount) throws BadRequestException {
+    public Collection<Question> getQuestions(int amount)  {
         return examinerService.getQuestions(amount);
     }
 }

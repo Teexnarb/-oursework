@@ -3,10 +3,9 @@ package pro.sky.JavaCoursework.service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.JavaCoursework.entity.Question;
-import pro.sky.JavaCoursework.exception.NotEnoughQuestions;
+import pro.sky.JavaCoursework.exception.QuestionLimitException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
@@ -17,20 +16,16 @@ public class ExaminerServiceImpl implements ExaminerService {
     }
 
     @Override
-    public List<Question> getQuestions(int count) {
-        List<Question> questions = new ArrayList<>();
-
-        while (questions.size() < count) {
-            Question question = questionService.getRandomQuestion();
-
-            if (!questions.contains(question)) {
-                questions.add(question);
-            }
+    public HashSet<Question> getQuestions(int count) {
+        Collection<Question> questions = questionService.getAllQuestions();
+        int questionsSize = questions.size();
+        if (questionsSize < count) {
+            throw new QuestionLimitException(String.format("", count, questionsSize));
         }
-
-        if (questions.size() < count) {
-            throw new NotEnoughQuestions("Вопросов получено недостаточное количество");
+        Set<Question> result = new HashSet<>();
+        while (result.size() < count) {
+            result.add(questionService.getRandomQuestion());
         }
-        return questions;
+        return (HashSet<Question>) result;
     }
 }
